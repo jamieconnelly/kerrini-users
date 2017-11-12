@@ -1,8 +1,14 @@
 import unittest
 
-from app import app, db
+from app import create_app, db
+from app.api.models import User
 
 from flask_script import Manager
+
+
+app = create_app()
+manager = Manager(app)
+
 
 manager = Manager(app)
 
