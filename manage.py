@@ -5,6 +5,8 @@ from app.api.models import User
 
 import coverage
 
+from flask_migrate import MigrateCommand
+
 from flask_script import Manager
 
 COV = coverage.coverage(
@@ -22,6 +24,7 @@ manager = Manager(app)
 
 
 manager = Manager(app)
+manager.add_command('db', MigrateCommand)
 
 
 @manager.command
