@@ -6,8 +6,9 @@ class BaseConfig:
     DEBUG = False
     TESTING = False
     SQLALCHEMY_TRACK_MODIFICATIONS = False
-    SECRET_KEY = 'my_precious'
-
+    SECRET_KEY = os.environ.get('SECRET_KEY')
+    TOKEN_EXPIRATION_DAYS = 30
+    TOKEN_EXPIRATION_SECONDS = 0
 
 class DevelopmentConfig(BaseConfig):
     """Development configuration"""

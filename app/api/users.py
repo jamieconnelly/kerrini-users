@@ -3,22 +3,16 @@ from flask import Blueprint, jsonify, request
 from sqlalchemy import exc
 
 from app.api.models import User
+from app.api.utils import authenticate
 
 from app import db
 
 users_blueprint = Blueprint('users', __name__)
 
 
-@users_blueprint.route('/ping', methods=['GET'])
-def ping_pong():
-    return jsonify({
-        'status': 'success',
-        'message': 'pong!'
-    })
-
-
-@users_blueprint.route('/users', methods=['POST'])
-def add_user():
+@users_blueprint.route('/users/add', methods=['POST'])
+@authenticate
+def add_user(resp):
     post_data = request.get_json()
 
     if not post_data:
@@ -29,11 +23,12 @@ def add_user():
 
     username = post_data.get('username')
     email = post_data.get('email')
+    password = post_data.get('password')
 
     try:
         user = User.query.filter_by(email=email).first()
         if not user:
-            db.session.add(User(username=username, email=email))
+            db.session.add(User(username=username, email=email, password=password))
             db.session.commit()
             return jsonify({
                 'status': 'success',
