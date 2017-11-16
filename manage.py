@@ -56,8 +56,8 @@ def cov():
 @manager.command
 def seed_db():
     """Seeds the database."""
-    db.session.add(User(username='michael', email="michael@realpython.com"))
-    db.session.add(User(username='michaelherman', email="michael@mherman.org"))
+    db.session.add(User(username='jamie', email="jamie@test.com", password="password"))
+    db.session.add(User(username='jamieconnelly', email="jamieconnelly@test.org", password="password"))
     db.session.commit()
 
 
