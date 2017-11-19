@@ -17,10 +17,9 @@ def authenticate(f):
 
         if not auth_header:
             response_object['message'] = 'Provide a valid auth token.'
-            code = 403
-            return jsonify(response_object), code
+            return jsonify(response_object), 403
 
-        auth_token = auth_header.split(" ")[1]
+        auth_token = auth_header.split(' ')[1]
         resp = User.decode_auth_token(auth_token)
 
         if isinstance(resp, str):
@@ -28,9 +27,8 @@ def authenticate(f):
             return jsonify(response_object), code
 
         user = User.query.filter_by(id=resp).first()
-        if not user or not user.active:
+        if not user:
             return jsonify(response_object), code
 
-        print(resp)
         return f(resp, *args, **kwargs)
     return decorated_function
